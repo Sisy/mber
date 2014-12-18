@@ -1,15 +1,17 @@
-package hello;
+package com.mbersapp.rest.domain;
 
-public class Event {
+import java.util.Date;
+
+public class EventReadResponse {
 
     private String id;
     private String host;
     private String location;
     private String description;
 
-    public Event() {}
+    public EventReadResponse() {}
 
-    public Event(String id, String host, String location, String description) {
+    public EventReadResponse(String id, String host, String location, String description) {
         this.id = id;
         this.host = host;
         this.location = location;
@@ -32,12 +34,7 @@ public class Event {
         return description;
     }
 
-    @Override
-    public Object clone() {
-        return new Event(id, host, location, description);
-    }
-
-    public static Builder eventBuilder() {
+    public static Builder eventReadResponseBuilder() {
         return new Builder();
     }
 
@@ -46,17 +43,17 @@ public class Event {
         private String host;
         private String location;
         private String description;
+        private Date createdAt;
 
-        public Event build() {
-            return new Event(id, host, location, description);
+        public EventReadResponse build() {
+            return new EventReadResponse(id, host, location, description);
         }
 
-        public Builder clone(Event event) {
-            Event clone = (Event) event.clone();
-            id = clone.id;
-            host = clone.host;
-            location = clone.location;
-            description = clone.description;
+        public Builder clone(EventReadResponse eventEntity) {
+            id = eventEntity.id;
+            host = eventEntity.host;
+            location = eventEntity.location;
+            description = eventEntity.description;
 
             return this;
         }
