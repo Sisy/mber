@@ -36,7 +36,7 @@ public class EventController {
     public List<EventEntity> getEvents(@RequestParam(required = false) String location) {
         ArrayList<EventEntity> filteredEventEntities = new ArrayList<>();
 
-        //TODO: implement request, response, and service
+        //TODO: Shiyue! implement request, response, and service
 //        if (location == null) {
 //            filteredEventEntities.addAll(events.values());
 //        } else {
