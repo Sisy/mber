@@ -8,7 +8,6 @@ import com.mbersapp.rest.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,21 +32,8 @@ public class EventController {
     }
 
     @RequestMapping(value = "/events", method = RequestMethod.GET)
-    public List<EventEntity> getEvents(@RequestParam(required = false) String location) {
-        ArrayList<EventEntity> filteredEventEntities = new ArrayList<>();
-
-        //TODO: Shiyue! implement request, response, and service
-//        if (location == null) {
-//            filteredEventEntities.addAll(events.values());
-//        } else {
-//            for (EventEntity eventEntity : events.values()) {
-//                if (eventEntity.getLocation().equals(location)) {
-//                    filteredEventEntities.add(eventEntity);
-//                }
-//            }
-//        }
-
-        return filteredEventEntities;
+    public List<EventReadResponse> getEvents() {
+        return eventService.readEvents(eventReadRequestBuilder().build());
     }
 
     @RequestMapping(value = "/events/{eventId}", method = RequestMethod.GET)

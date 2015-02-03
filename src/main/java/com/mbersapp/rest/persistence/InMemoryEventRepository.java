@@ -21,7 +21,7 @@ public class InMemoryEventRepository implements EventRepository {
     }
 
     @Override
-    public List<EventEntity> readlAll() {
+    public List<EventEntity> readAll() {
         return new ArrayList<>(events.values());
     }
 

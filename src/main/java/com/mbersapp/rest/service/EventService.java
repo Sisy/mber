@@ -9,7 +9,9 @@ import com.mbersapp.rest.persistence.EventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import static com.mbersapp.rest.domain.EventCreationResponse.eventCreationResponseBuilder;
 import static com.mbersapp.rest.domain.EventReadResponse.eventReadResponseBuilder;
@@ -53,5 +55,23 @@ public class EventService {
                 .location(event.getLocation())
                 .description(event.getDescription())
                 .build();
+    }
+
+    public List<EventReadResponse> readEvents(EventReadRequest eventReadRequest) {
+        List<EventReadResponse> eventReadResponseList = new ArrayList<>();
+
+        List<EventEntity> events = eventRepo.readAll();
+        for (EventEntity event : events) {
+            eventReadResponseList.add(
+                    eventReadResponseBuilder()
+                            .id(event.getId())
+                            .host(event.getHost())
+                            .location(event.getLocation())
+                            .description(event.getDescription())
+                            .build()
+            );
+        }
+
+        return eventReadResponseList;
     }
 }

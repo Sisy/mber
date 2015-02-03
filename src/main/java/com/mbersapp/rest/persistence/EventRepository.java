@@ -8,7 +8,7 @@ public interface EventRepository {
 
     EventEntity create(EventEntity event);
 
-    List<EventEntity> readlAll();
+    List<EventEntity> readAll();
 
     EventEntity read(String id);
 }
