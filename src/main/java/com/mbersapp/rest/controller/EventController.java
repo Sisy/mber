@@ -27,7 +27,7 @@ public class EventController {
     }
 
     @RequestMapping(value = "/events", method = RequestMethod.POST)
-    public EventCreationResponse event(@RequestBody EventCreationRequest eventCreationRequest) {
+    public EventCreationResponse createEvent(@RequestBody EventCreationRequest eventCreationRequest) {
         return eventService.createEvent(eventCreationRequest);
     }
 

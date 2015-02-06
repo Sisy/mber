@@ -34,6 +34,30 @@ public class EventReadResponse {
         return description;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        EventReadResponse that = (EventReadResponse) o;
+
+        if (description != null ? !description.equals(that.description) : that.description != null) return false;
+        if (host != null ? !host.equals(that.host) : that.host != null) return false;
+        if (id != null ? !id.equals(that.id) : that.id != null) return false;
+        if (location != null ? !location.equals(that.location) : that.location != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (host != null ? host.hashCode() : 0);
+        result = 31 * result + (location != null ? location.hashCode() : 0);
+        result = 31 * result + (description != null ? description.hashCode() : 0);
+        return result;
+    }
+
     public static Builder eventReadResponseBuilder() {
         return new Builder();
     }
