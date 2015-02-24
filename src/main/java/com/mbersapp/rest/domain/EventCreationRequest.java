@@ -7,13 +7,13 @@ public class EventCreationRequest {
     private String location;
     private String description;
 
-    public EventCreationRequest() {}
+    private EventCreationRequest() {}
 
-    public EventCreationRequest(String id, String host, String location, String description) {
-        this.id = id;
-        this.host = host;
-        this.location = location;
-        this.description = description;
+    private EventCreationRequest(Builder builder) {
+        id = builder.id;
+        host = builder.host;
+        location = builder.location;
+        description = builder.description;
     }
 
     public String getId() {
@@ -34,6 +34,16 @@ public class EventCreationRequest {
 
     public static Builder eventCreationRequestBuilder() {
         return new Builder();
+    }
+
+    @Override
+    public String toString() {
+        return "EventCreationRequest{" +
+                "id='" + id + '\'' +
+                ", host='" + host + '\'' +
+                ", location='" + location + '\'' +
+                ", description='" + description + '\'' +
+                '}';
     }
 
     @Override
@@ -60,11 +70,14 @@ public class EventCreationRequest {
         return result;
     }
 
-    public static class Builder {
+    public static final class Builder {
         private String id;
         private String host;
         private String location;
         private String description;
+
+        private Builder() {
+        }
 
         public Builder id(String id) {
             this.id = id;
@@ -87,7 +100,7 @@ public class EventCreationRequest {
         }
 
         public EventCreationRequest build() {
-            return new EventCreationRequest(id, host, location, description);
+            return new EventCreationRequest(this);
         }
     }
 }

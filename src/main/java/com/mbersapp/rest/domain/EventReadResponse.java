@@ -1,7 +1,5 @@
 package com.mbersapp.rest.domain;
 
-import java.util.Date;
-
 public class EventReadResponse {
 
     private String id;
@@ -9,13 +7,13 @@ public class EventReadResponse {
     private String location;
     private String description;
 
-    public EventReadResponse() {}
+    private EventReadResponse() {}
 
-    public EventReadResponse(String id, String host, String location, String description) {
-        this.id = id;
-        this.host = host;
-        this.location = location;
-        this.description = description;
+    private EventReadResponse(Builder builder) {
+        id = builder.id;
+        host = builder.host;
+        location = builder.location;
+        description = builder.description;
     }
 
     public String getId() {
@@ -32,6 +30,20 @@ public class EventReadResponse {
 
     public String getDescription() {
         return description;
+    }
+
+    @Override
+    public String toString() {
+        return "EventReadResponse{" +
+                "id='" + id + '\'' +
+                ", host='" + host + '\'' +
+                ", location='" + location + '\'' +
+                ", description='" + description + '\'' +
+                '}';
+    }
+
+    public static Builder eventReadResponseBuilder() {
+        return new Builder();
     }
 
     @Override
@@ -58,28 +70,13 @@ public class EventReadResponse {
         return result;
     }
 
-    public static Builder eventReadResponseBuilder() {
-        return new Builder();
-    }
-
-    public static class Builder {
+    public static final class Builder {
         private String id;
         private String host;
         private String location;
         private String description;
-        private Date createdAt;
 
-        public EventReadResponse build() {
-            return new EventReadResponse(id, host, location, description);
-        }
-
-        public Builder clone(EventReadResponse eventEntity) {
-            id = eventEntity.id;
-            host = eventEntity.host;
-            location = eventEntity.location;
-            description = eventEntity.description;
-
-            return this;
+        private Builder() {
         }
 
         public Builder id(String id) {
@@ -100,6 +97,10 @@ public class EventReadResponse {
         public Builder description(String description) {
             this.description = description;
             return this;
+        }
+
+        public EventReadResponse build() {
+            return new EventReadResponse(this);
         }
     }
 }

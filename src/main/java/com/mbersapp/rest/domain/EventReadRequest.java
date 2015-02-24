@@ -4,14 +4,25 @@ public class EventReadRequest {
 
     private String id;
 
-    public EventReadRequest() {}
+    private EventReadRequest() {}
 
-    public EventReadRequest(String id) {
-        this.id = id;
+    private EventReadRequest(Builder builder) {
+        id = builder.id;
     }
 
     public String getId() {
         return id;
+    }
+
+    public static Builder eventReadRequestBuilder() {
+        return new Builder();
+    }
+
+    @Override
+    public String toString() {
+        return "EventReadRequest{" +
+                "id='" + id + '\'' +
+                '}';
     }
 
     @Override
@@ -31,26 +42,19 @@ public class EventReadRequest {
         return id != null ? id.hashCode() : 0;
     }
 
-    public static Builder eventReadRequestBuilder() {
-        return new Builder();
-    }
-
-    public static class Builder {
+    public static final class Builder {
         private String id;
 
-        public EventReadRequest build() {
-            return new EventReadRequest(id);
-        }
-
-        public Builder clone(EventReadRequest eventReadRequest) {
-            id = eventReadRequest.id;
-
-            return this;
+        private Builder() {
         }
 
         public Builder id(String id) {
             this.id = id;
             return this;
+        }
+
+        public EventReadRequest build() {
+            return new EventReadRequest(this);
         }
     }
 }
