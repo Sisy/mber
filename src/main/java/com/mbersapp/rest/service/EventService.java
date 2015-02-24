@@ -6,11 +6,11 @@ import com.mbersapp.rest.domain.EventReadRequest;
 import com.mbersapp.rest.domain.EventReadResponse;
 import com.mbersapp.rest.model.EventEntity;
 import com.mbersapp.rest.persistence.EventRepository;
+import com.mbersapp.rest.utils.TimeSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import static com.mbersapp.rest.domain.EventCreationResponse.eventCreationResponseBuilder;
@@ -21,10 +21,12 @@ import static com.mbersapp.rest.model.EventEntity.eventBuilder;
 public class EventService {
 
     private final EventRepository eventRepo;
+    private final TimeSource timeSource;
 
     @Autowired
-    public EventService(EventRepository eventRepo) {
+    public EventService(EventRepository eventRepo, TimeSource timeSource) {
         this.eventRepo = eventRepo;
+        this.timeSource = timeSource;
     }
 
     public EventCreationResponse createEvent(EventCreationRequest eventCreationRequest) {
@@ -33,7 +35,7 @@ public class EventService {
                 .host(eventCreationRequest.getHost())
                 .location(eventCreationRequest.getLocation())
                 .description(eventCreationRequest.getDescription())
-                .createdAt(new Date())
+                .createdAt(timeSource.getCurrentTime())
                 .build();
 
         EventEntity createdEvent = eventRepo.create(eventToCreate);
