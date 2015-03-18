@@ -5,7 +5,7 @@ import com.mbersapp.rest.domain.EventCreationResponse;
 import com.mbersapp.rest.domain.EventReadRequest;
 import com.mbersapp.rest.domain.EventReadResponse;
 import com.mbersapp.rest.model.EventEntity;
-import com.mbersapp.rest.persistence.EventRepository;
+import com.mbersapp.rest.persistence.SpringEventRepository;
 import com.mbersapp.rest.utils.TimeSource;
 import org.junit.Before;
 import org.junit.Test;
@@ -32,7 +32,7 @@ public class EventServiceTest {
     EventService service;
 
     @Mock
-    EventRepository repo;
+    SpringEventRepository repo;
 
     @Mock
     TimeSource timeSource;
@@ -61,7 +61,7 @@ public class EventServiceTest {
                 .description("bad")
                 .build();
 
-        doReturn(createdEvent).when(repo).create(any(EventEntity.class));
+        doReturn(createdEvent).when(repo).save(any(EventEntity.class));
 
         EventCreationResponse actualResponse = service.createEvent(eventCreationRequest);
 
@@ -74,7 +74,7 @@ public class EventServiceTest {
 
         assertEquals(expectedResponse, actualResponse);
 
-        verify(repo).create(eventBuilder()
+        verify(repo).save(eventBuilder()
                 .id("1")
                 .host("shiyue")
                 .location("boston")
@@ -102,7 +102,7 @@ public class EventServiceTest {
                 .description("sb could be sb")
                 .build();
 
-        doReturn(event).when(repo).read(eventReadRequest.getId());
+        doReturn(event).when(repo).findOne(eventReadRequest.getId());
         assertEquals(eventReadResponse,service.readEvent(eventReadRequest));
 
     }
@@ -142,7 +142,7 @@ public class EventServiceTest {
                 .location("sb")
                 .description("sd could be sb")
                 .build();
-        doReturn(asList(event, event1)).when(repo).readAll();
+        doReturn(asList(event, event1)).when(repo).findAll();
 
         assertEquals(eventReadResponseList,service.readEvents(eventReadRequest));
     }

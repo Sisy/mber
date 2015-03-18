@@ -5,7 +5,7 @@ import com.mbersapp.rest.domain.EventCreationResponse;
 import com.mbersapp.rest.domain.EventReadRequest;
 import com.mbersapp.rest.domain.EventReadResponse;
 import com.mbersapp.rest.model.EventEntity;
-import com.mbersapp.rest.persistence.EventRepository;
+import com.mbersapp.rest.persistence.SpringEventRepository;
 import com.mbersapp.rest.utils.TimeSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,11 +20,11 @@ import static com.mbersapp.rest.model.EventEntity.eventBuilder;
 @Service
 public class EventService {
 
-    private final EventRepository eventRepo;
+    private final SpringEventRepository eventRepo;
     private final TimeSource timeSource;
 
     @Autowired
-    public EventService(EventRepository eventRepo, TimeSource timeSource) {
+    public EventService(SpringEventRepository eventRepo, TimeSource timeSource) {
         this.eventRepo = eventRepo;
         this.timeSource = timeSource;
     }
@@ -38,7 +38,7 @@ public class EventService {
                 .createdAt(timeSource.getCurrentTime())
                 .build();
 
-        EventEntity createdEvent = eventRepo.create(eventToCreate);
+        EventEntity createdEvent = eventRepo.save(eventToCreate);
 
         return eventCreationResponseBuilder()
                 .id(createdEvent.getId())
@@ -49,7 +49,7 @@ public class EventService {
     }
 
     public EventReadResponse readEvent(EventReadRequest eventReadRequest) {
-        EventEntity event = eventRepo.read(eventReadRequest.getId());
+        EventEntity event = eventRepo.findOne(eventReadRequest.getId());
 
         return eventReadResponseBuilder()
                 .id(event.getId())
@@ -62,7 +62,7 @@ public class EventService {
     public List<EventReadResponse> readEvents(EventReadRequest eventReadRequest) {
         List<EventReadResponse> eventReadResponseList = new ArrayList<>();
 
-        List<EventEntity> events = eventRepo.readAll();
+        Iterable<EventEntity> events = eventRepo.findAll();
         for (EventEntity event : events) {
             eventReadResponseList.add(
                     eventReadResponseBuilder()
